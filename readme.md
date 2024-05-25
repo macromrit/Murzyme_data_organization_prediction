@@ -19,13 +19,13 @@ This repository implements a machine learning model using Support Vector Machine
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/<your-username>/murzyme-classification.git
+   https://github.com/macromrit/Murzyme_data_organization_prediction.git
    ```
 
 2. **Install dependencies:**
 
    ```bash
-   pip install requirements.txt
+   pip install -r requirements.txt
    ```
 
 3. **Run the application:**
@@ -69,7 +69,7 @@ The dataset used for training and testing the model is not included in this repo
 
 ### Model Preprocessing
 
-The preprocessing steps used on the dataset, including feature extraction, engineering, imputation, overbalancing, and scaling, are implemented in the `preprocessing.py` script.
+The preprocessing steps used on the dataset, including feature extraction, engineering, imputation, overbalancing, and scaling, are implemented in the `preProcessingAndTraining.ipynb` script.
 
 
 ### Contribution
