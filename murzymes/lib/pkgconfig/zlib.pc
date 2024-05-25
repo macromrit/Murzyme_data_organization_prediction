@@ -1,0 +1,13 @@
+prefix=/Users/macromrit/Documents/BioMedicalAI/murzymes
+exec_prefix=/Users/macromrit/Documents/BioMedicalAI/murzymes
+libdir=/Users/macromrit/Documents/BioMedicalAI/murzymes/lib
+sharedlibdir=/Users/macromrit/Documents/BioMedicalAI/murzymes/lib
+includedir=/Users/macromrit/Documents/BioMedicalAI/murzymes/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}
