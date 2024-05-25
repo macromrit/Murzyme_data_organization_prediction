@@ -1,4 +1,4 @@
-## Murzyme Classification with Machine Learning (SVM-RBF)
+# Murzyme Classification with Machine Learning (SVM-RBF)
 
 This repository implements a machine learning model using Support Vector Machines (SVM) with RBF kernel for classifying murzymes and non-murzymes. It also provides FastAPI endpoints for data access, dimensionality reduction visualization (t-SNE and PCA), and prediction.
 
@@ -38,26 +38,26 @@ This repository implements a machine learning model using Support Vector Machine
 
 ### API Endpoints
 
-**1. Get All Data Points (GET /data)**
+**1. Get All Data Points (GET /getAllDatapoints)**
 
 * Returns a JSON object containing all data points in the dataset.
 
-**2. Search Data Point by ID (GET /data/{id})**
+**2. Search Data Point by ID (GET /search_datapoint/{search_keyword})**
 
 * Replace `{id}` with the desired data point ID.
 * Returns a JSON object containing the data point with the specified ID.
 
-**3. Get t-SNE Coordinates (GET /data/tsne/{data_ids})**
+**3. Get t-SNE Coordinates (GET /tnse_plot_feature/{feature_number})**
 
 * Replace `{data_ids}` with a comma-separated list of data point IDs.
 * Returns a JSON object containing x-y coordinates for a t-SNE plot of the specified data points.
 
-**4. Get PCA Coordinates (GET /data/pca/{data_ids})**
+**4. Get PCA Coordinates (GET /pca_plot_feature/{feature_number})**
 
 * Replace `{data_ids}` with a comma-separated list of data point IDs.
 * Returns a JSON object containing x-y coordinates for a PCA plot of the specified data points.
 
-**5. Predict Murzyme Class (POST /predict)**
+**5. Predict Murzyme Class (POST /predict_murzyme_or_not)**
 
 * Send a JSON object containing the data point features in the request body.
 * Returns a JSON object with the predicted murzyme class (murzyme or non-murzyme).
@@ -65,7 +65,7 @@ This repository implements a machine learning model using Support Vector Machine
 
 ### Dataset
 
-The dataset used for training and testing the model is not included in this repository due to potential size or sensitivity constraints. You can replace the data loading logic in `main.py` to point to your own dataset. 
+The dataset used for training and testing the model is  included in this repository in `raw_data` directory. You can replace the data loading logic in `main.py` to point to your own dataset. 
 
 ### Model Preprocessing
 
