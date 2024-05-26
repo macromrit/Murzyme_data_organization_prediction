@@ -1,11 +1,26 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
+from typing import List, Optional
 import uvicorn
 import json
 import numpy as np
 import pickle as pkl
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
+
+origins = [
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Output Mapping
 OUTPUT_MAPPING = {0: "Non-Murzyme", 1: "Murzyme"}
@@ -22,19 +37,22 @@ with open("scaler_model.pkl", "rb") as modelScaler:
 def extract_features(arr):
     res = list()
     for vctr in arr:
-        if type(arr) is not type(np.array([])) or type(arr) is not list:
+        if type(vctr) is not type(np.array([])) or type(vctr) is not list:
             res += ([0] * 7) # += is as same as .extend() method
             continue
         # else
         res += [
-            np.mean(arr),
-            np.std(arr),
-            np.min(arr),
-            np.max(arr),
-            np.median(arr),
-            np.percentile(arr, 25),  # First quartile (Q1)
-            np.percentile(arr, 75)   # Third quartile (Q3)
+            np.mean(vctr),
+            np.std(vctr),
+            np.min(vctr),
+            np.max(vctr),
+            np.median(vctr),
+            np.percentile(vctr, 25),  # First quartile (Q1)
+            np.percentile(vctr, 75)   # Third quartile (Q3)
         ]
+
+        print(vctr)
+
     return res
 
 def extractAndScaleAndPredict(input):
@@ -171,8 +189,6 @@ def getTnsePlotForFeatureN(feature_number: int) -> dict:
         } 
 
 
-
-
 @app.get("/pca_plot_feature/{feature_number}")
 def getPcaPlotForFeatureN(feature_number: int) -> dict:
     """
@@ -202,14 +218,22 @@ def getPcaPlotForFeatureN(feature_number: int) -> dict:
 
 
 @app.post("/predict_murzyme_or_not")
-def predictOutput(input_features: str) -> dict:
+def predictOutput(feature_1: List[float] = Body(...),
+                  feature_2: List[float] = Body(...),
+                  feature_3: List[float] = Body(...),
+                  feature_4: List[float] = None) -> dict:
     """
     instead of nan's "None" is Expected
     and a normal list of integers or list is expected
     """
-    res = extractAndScaleAndPredict(eval(input_features))
+    try:
+        res = extractAndScaleAndPredict([list(map(float, feature_1)), list(map(float, feature_2)), list(map(float,feature_3)), list(map(float,feature_4)) if feature_4 is not None else None])
 
-    return {"predicted_result": res}
+        return {"predicted_result": res}
+    except:
+        return {"Error Message": "Faulty Input, Check to the input Features again"}
+
+    
 
 
 if __name__ == "__main__":

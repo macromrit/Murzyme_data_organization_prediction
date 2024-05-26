@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <button id="get-data">Get Datapoints</button>
+  <div id="data-container"></div>
+  <script src="script.js"></script>
+</body>
+</html>
+
+<script>
+const getDataBtn = document.getElementById('get-data');
+const dataContainer = document.getElementById('data-container');
+
+getDataBtn.addEventListener('click', async () => {
+  try {
+    const apiUrl = 'http://127.0.0.1:8000/getAllDatapoints'; // Replace with actual API URL if different
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data); // View data in console for debugging
+    
+    // Display data (example): Update this section to display data as needed
+    let formattedData = `<h4>Murzymes:</h4>`;
+    for (const key in data.murzymes) {
+      formattedData += `<p>${key}: ${data.murzymes[key]}</p>`;
+    }
+    formattedData += `<h4>Non-Murzymes:</h4>`;
+    for (const key in data.non_murzymes) {
+      formattedData += `<p>${key}: ${data.non_murzymes[key]}</p>`;
+    }
+    dataContainer.innerHTML = formattedData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    dataContainer.innerHTML = 'Error fetching datapoints.';
+  }
+});
+</script>
